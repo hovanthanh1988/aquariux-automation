@@ -9,7 +9,7 @@ from pages.trading_home_page import TradingHomePage
 @pytest.mark.usefixtures("setup")
 class TestAuthentication:
 
-    def test_register_account(self):
+    def test_register_account_success(self):
         trade_page = TradePage(self.driver)
         random_number = random.randint(1, 9999)
 
@@ -20,7 +20,7 @@ class TestAuthentication:
         trade_page.click_get_start_button()
         trade_page.verify_demo_account_successful_creation_message()
 
-    def test_login(self):
+    def test_login_success(self):
         trade_page = TradePage(self.driver)
         login_page = LogIn(self.driver)
         trading_home_page = TradingHomePage(self.driver)
@@ -30,3 +30,6 @@ class TestAuthentication:
         trade_page.click_login_button()
         login_page.login(config.USER_NAME, config.PASS_WORD)
         trading_home_page.verify_is_trading_homepage(config.USER_NAME)
+
+    def test_login_fixture(self, login):
+        trade_page = TradePage(self.driver)
