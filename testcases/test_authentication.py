@@ -5,7 +5,6 @@ from pages.trade_page import TradePage
 from pages.login_page import LogIn
 from pages.trading_home_page import TradingHomePage
 
-
 @pytest.mark.usefixtures("setup")
 class TestAuthentication:
 
@@ -29,7 +28,4 @@ class TestAuthentication:
         trade_page.click_start_demo_button()
         trade_page.click_login_button()
         login_page.login(config.USER_NAME, config.PASS_WORD)
-        trading_home_page.verify_is_trading_homepage(config.USER_NAME)
-
-    def test_login_fixture(self, login):
-        trade_page = TradePage(self.driver)
+        trading_home_page.validate_page_is_trading_homepage(config.USER_NAME)

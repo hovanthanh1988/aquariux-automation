@@ -1,7 +1,10 @@
+import time
+
 from pytest import fixture
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+import json
 
 from pages.login_page import LogIn
 from pages.trade_page import TradePage
@@ -35,4 +38,6 @@ def login(request):
     trade_page.click_start_demo_button()
     trade_page.click_login_button()
     login_page.login(config.USER_NAME, config.PASS_WORD)
-    #trading_home_page.input_symbol(config.SYMBOL)
+    trading_home_page.input_symbol(config.SYMBOL)
+    trading_home_page.click_symbol_search_result(config.SYMBOL)
+    time.sleep(5)

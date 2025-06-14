@@ -1,0 +1,7 @@
+{
+  "market": {
+    "title": "Market Order Submitted",
+    "BUY": "BTCUSD.std - BUY ORDER placed, Size: 0.05 / Units: 0.05. Stop Loss: 104,874.0. Take Profit: 105,074.0.",
+    "SELL": "BTCUSD.std - SELL ORDER placed, Size: 0.05 / Units: 0.05. Stop Loss: 104,874.0. Take Profit: 105,074.0."
+  }
+}
