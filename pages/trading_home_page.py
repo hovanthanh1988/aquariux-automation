@@ -1,4 +1,7 @@
+from datetime import datetime
 import os
+import time
+
 import config
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
@@ -30,6 +33,14 @@ class TradingHomePage(BasePage):
     _ask_price_locator = "//div[@data-testid='trade-live-buy-price']"
     _bid_price_locator = "//div[@data-testid='trade-live-sell-price']"
     _current_trading_symbol_locator = "//div[@data-testid='symbol-overview-id']"
+
+    _open_date_locator = "//th[@data-testid='asset-open-column-open-date']"
+    _open_type_locator = "//td[@data-testid='asset-open-column-order-type']"
+    _open_size_locator = "//td[@data-testid='asset-open-column-volume']"
+    _open_unit_locator = "//td[@data-testid='asset-open-column-units']"
+    _entry_price_locator = "//td[@data-testid='asset-open-column-entry-price']"
+    _take_profit_locator = "//td[@data-testid='asset-open-column-take-profit']"
+    _stop_loss_locator = "//td[@data-testid='asset-open-column-stop-loss']"
 
     def __init__(self, driver):
         super(TradingHomePage, self).__init__(driver)
@@ -105,15 +116,65 @@ class TradingHomePage(BasePage):
         description = self.find_element((By.XPATH, self._notifications_description_locator)).text
         return description
 
+    def is_notification_present(self):
+        return self.is_element_present((By.XPATH, self._notifications_locator))
+
+    def get_open_date(self):
+        open_date = self.find_element((By.XPATH, self._open_date_locator)).text
+        return open_date
+
+    def get_open_type(self):
+        open_type = self.find_element((By.XPATH, self._open_type_locator)).text
+        return open_type
+
+    def get_open_size(self):
+        open_size = self.find_element((By.XPATH, self._open_size_locator)).text
+        return float(open_size.replace(',', '')) if open_size else None
+    def get_open_unit(self):
+        open_unit = self.find_element((By.XPATH, self._open_unit_locator)).text
+        return float(open_unit.replace(',', '')) if open_unit else None
+
+    def get_entry_price(self):
+        entry_price = self.find_element((By.XPATH, self._entry_price_locator)).text
+        return float(entry_price.replace(',', '')) if entry_price else None
+
+    def get_take_profit(self):
+        take_profit = self.find_element((By.XPATH, self._take_profit_locator)).text
+        return float(take_profit.replace(',', '')) if take_profit else None
+
+    def get_stop_loss(self):
+        stop_loss = self.find_element((By.XPATH, self._stop_loss_locator)).text
+        return float(stop_loss.replace(',', '')) if stop_loss else None
+
     def validate_placed_details_with_notification(self, symbol, order_action, order_type, size, sl, tp):
         file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'expected_notifications.json')
 
         data = modify_notification_data(file_path, symbol, size, sl, tp)
-        expected_title = data['market']['title']
-        expected_description = data['market'][order_action.upper()]
+        expected_title = data[order_type]['title']
+        expected_description = data[order_type][order_action.upper()]
 
         notification_title = self.get_notification_title()
         notification_description = self.get_notification_description()
 
         assert notification_title == expected_title
         assert notification_description == expected_description
+
+    def validate_placed_details_with_table_detail(self, order_action, size, entry_price, tp, sl):
+        time.sleep(5)
+        expected_open_date = datetime.now().date().strftime("%Y-%m-%d")
+        actual_open_date = self.get_open_date()
+        actual_open_type = self.get_open_type()
+        actual_open_size = self.get_open_size()
+        actual_open_unit = self.get_open_unit()
+        actual_entry_price = self.get_entry_price()
+        actual_take_profit = self.get_take_profit()
+        actual_stop_loss = self.get_stop_loss()
+
+        assert expected_open_date in actual_open_date
+        assert actual_open_type == order_action
+        assert actual_open_size == size
+        assert actual_open_unit == size
+        assert actual_entry_price == entry_price
+        assert actual_take_profit == tp
+        assert actual_stop_loss == sl
+

@@ -39,5 +39,6 @@ def login(request):
     trade_page.click_login_button()
     login_page.login(config.USER_NAME, config.PASS_WORD)
     trading_home_page.input_symbol(config.SYMBOL)
+    time.sleep(5)
     trading_home_page.click_symbol_search_result(config.SYMBOL)
     time.sleep(5)

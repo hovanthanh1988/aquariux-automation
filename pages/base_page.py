@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
-TIME_OUT = 10
+TIME_OUT = 20
 class BasePage:
     def __init__(self, driver: webdriver):
         self.driver = driver
@@ -24,3 +24,4 @@ class BasePage:
             return True
         except:
             return False
+

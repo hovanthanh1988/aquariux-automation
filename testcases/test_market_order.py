@@ -21,7 +21,7 @@ class TestMarketOrder:
         trading_home_page.click_trade_button()
         trading_home_page.click_confirm_button()
         trading_home_page.validate_placed_details_with_notification(config.SYMBOL, "BUY", "market", config.SIZE, sl_price, tp_price)
-
+        trading_home_page.validate_placed_details_with_table_detail("BUY", config.SIZE, ask_price, tp_price, sl_price)
     def test_place_market_sell_order_with_sl_tp(self):
         trading_home_page = TradingHomePage(self.driver)
         trading_home_page.click_sell_button()
@@ -37,6 +37,7 @@ class TestMarketOrder:
         trading_home_page.click_confirm_button()
         trading_home_page.validate_placed_details_with_notification(config.SYMBOL, "SELL", "market", config.SIZE,
                                                                     sl_price, tp_price)
+        trading_home_page.validate_placed_details_with_table_detail("SELL", config.SIZE, bid_price, tp_price, sl_price)
 
 
 
