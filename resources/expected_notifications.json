@@ -3,5 +3,20 @@
     "title": "Market Order Submitted",
     "BUY": "BTCUSD.std - BUY ORDER placed, Size: 0.05 / Units: 0.05. Stop Loss: 104,874.0. Take Profit: 105,074.0.",
     "SELL": "BTCUSD.std - SELL ORDER placed, Size: 0.05 / Units: 0.05. Stop Loss: 104,874.0. Take Profit: 105,074.0."
+  },
+  "edit_open_position": {
+    "title": "Market Order Updated",
+    "BUY": "BTCUSD.std - BUY ORDER updated, Size: 0.05 / Units: 0.05. Entry Price: 105,338.7. Stop Loss: 104,338.8. Take Profit: 106,338.8.",
+    "SELL": "BTCUSD.std - SELL ORDER updated, Size: 0.05 / Units: 0.05. Entry Price: 105,338.7. Stop Loss: 104,338.8. Take Profit: 106,338.8."
+  },
+  "close_open_position": {
+    "title": "Close Order",
+    "BUY": "BTCUSD.std - Buy order closed successfully.",
+    "SELL": "BTCUSD.std - Sell order closed successfully."
+  },
+  "Limit": {
+    "title": "Limit Order Submitted",
+    "BUY": "BTCUSD.std - BUY LIMIT ORDER placed, Size: 0.05 / Units: 0.05. Price: 100,000.0. Stop Loss: 99,900.0. Take Profit: 100,100.0.",
+    "SELL": "BTCUSD.std - SELL LIMIT ORDER placed, Size: 0.05 / Units: 0.05. Price: 100,000.0. Stop Loss: 99,900.0. Take Profit: 100,100.0."
   }
 }

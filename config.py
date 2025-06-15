@@ -5,4 +5,4 @@ PASS_WORD = "tZKN$go!N74$"
 SYMBOL = "BTCUSD.std"
 SL = 1000
 TP = 1000
-SIZE = 0.05
+SIZE = 0.06
