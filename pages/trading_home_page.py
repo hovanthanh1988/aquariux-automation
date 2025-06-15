@@ -42,6 +42,12 @@ class TradingHomePage(BasePage):
     _take_profit_locator = "//td[@data-testid='asset-open-column-take-profit']"
     _stop_loss_locator = "//td[@data-testid='asset-open-column-stop-loss']"
 
+    _edit_position_button_locator = "//div[@data-testid='asset-open-button-edit']"
+    _edit_input_stoploss_price_decrease_locator = "//div[@data-testid='edit-input-stoploss-price-decrease']"
+    _edit_input_stoploss_price_increase_locator = "//div[@data-testid='edit-input-stoploss-price-increase']"
+    _edit_input_takeprofit_price_decrease_locator = "//div[@data-testid='edit-input-takeprofit-price-decrease']"
+    _edit_input_takeprofit_price_increase_locator = "//div[@data-testid='edit-input-takeprofit-price-increase']"
+
     def __init__(self, driver):
         super(TradingHomePage, self).__init__(driver)
 
@@ -55,37 +61,9 @@ class TradingHomePage(BasePage):
         assert buy_button is True
         assert sell_button is True
 
-    def input_symbol(self, symbol):
-        self.input_text_to_element((By.XPATH, self._symbol_input_locator), symbol)
-
-    def click_symbol_search_result(self, symbol):
-        self.click_element((By.XPATH, self._symbol_search_results_locator.format(f"'{symbol}'")), 20)
-
-    def click_buy_button(self):
-        self.click_element((By.XPATH, self._buy_button_locator))
-
-    def click_sell_button(self):
-        self.click_element((By.XPATH, self._sell_button_locator))
-
-    def click_order_type_dropdown_and_select(self, value):
-        self.click_element((By.XPATH, self._order_type_dropdown_locator))
-        self.click_element((By.XPATH, f"//div[@data-testid='trade-dropdown-order-type-{value.lower()}']"))
-
     def get_current_trading_symbol(self):
         symbol = self.find_element((By.XPATH, self._current_trading_symbol_locator)).text
         return symbol if symbol else None
-
-    def input_size(self, size):
-        self.input_text_to_element((By.XPATH, self._size_input_locator), size)
-
-    def input_sl_points(self, sl):
-        self.input_text_to_element((By.XPATH, self._sl_points_input_locator), sl)
-
-    def input_sl_price(self, sl):
-        self.input_text_to_element((By.XPATH, self._sl_price_input_locator), sl)
-
-    def input_tp_price(self, tp):
-        self.input_text_to_element((By.XPATH, self._tp_price_input_locator), tp)
 
     def get_ask_price(self):
         ask_price = self.find_element((By.XPATH, self._ask_price_locator)).text
@@ -94,30 +72,20 @@ class TradingHomePage(BasePage):
     def get_bid_price(self):
         bid_price_text = self.find_element((By.XPATH, self._bid_price_locator)).text
         return float(bid_price_text.replace(',', '')) if bid_price_text else None
+
     def get_sl_price(self):
         return self.find_element((By.XPATH, self._sl_price_input_locator)).get_attribute('value')
 
     def get_tp_price(self):
         return self.find_element((By.XPATH, self._tp_price_input_locator)).get_attribute('value')
 
-    def input_tp_points(self, tp):
-        self.input_text_to_element((By.XPATH, self._tp_points_input_locator), tp)
-
-    def click_trade_button(self):
-        self.click_element((By.XPATH, self._trade_button_locator))
-
-    def click_confirm_button(self):
-        self.click_element((By.XPATH, self._confirm_button_locator))
-
     def get_notification_title(self):
         title = self.find_element((By.XPATH, self._notifications_title_locator)).text
         return title
+
     def get_notification_description(self):
         description = self.find_element((By.XPATH, self._notifications_description_locator)).text
         return description
-
-    def is_notification_present(self):
-        return self.is_element_present((By.XPATH, self._notifications_locator))
 
     def get_open_date(self):
         open_date = self.find_element((By.XPATH, self._open_date_locator)).text
@@ -130,6 +98,7 @@ class TradingHomePage(BasePage):
     def get_open_size(self):
         open_size = self.find_element((By.XPATH, self._open_size_locator)).text
         return float(open_size.replace(',', '')) if open_size else None
+
     def get_open_unit(self):
         open_unit = self.find_element((By.XPATH, self._open_unit_locator)).text
         return float(open_unit.replace(',', '')) if open_unit else None
@@ -145,6 +114,49 @@ class TradingHomePage(BasePage):
     def get_stop_loss(self):
         stop_loss = self.find_element((By.XPATH, self._stop_loss_locator)).text
         return float(stop_loss.replace(',', '')) if stop_loss else None
+
+    def input_symbol(self, symbol):
+        self.input_text_to_element((By.XPATH, self._symbol_input_locator), symbol)
+
+    def input_size(self, size):
+        self.input_text_to_element((By.XPATH, self._size_input_locator), size)
+
+    def input_sl_points(self, sl):
+        self.input_text_to_element((By.XPATH, self._sl_points_input_locator), sl)
+
+    def input_sl_price(self, sl):
+        self.input_text_to_element((By.XPATH, self._sl_price_input_locator), sl)
+
+    def input_tp_price(self, tp):
+        self.input_text_to_element((By.XPATH, self._tp_price_input_locator), tp)
+
+    def input_tp_points(self, tp):
+        self.input_text_to_element((By.XPATH, self._tp_points_input_locator), tp)
+
+    def click_symbol_search_result(self, symbol):
+        self.click_element((By.XPATH, self._symbol_search_results_locator.format(f"'{symbol}'")), 20)
+
+    def click_buy_button(self):
+        self.click_element((By.XPATH, self._buy_button_locator))
+
+    def click_sell_button(self):
+        self.click_element((By.XPATH, self._sell_button_locator))
+
+    def click_order_type_dropdown_and_select(self, value):
+        self.click_element((By.XPATH, self._order_type_dropdown_locator))
+        self.click_element((By.XPATH, f"//div[@data-testid='trade-dropdown-order-type-{value.lower()}']"))
+
+    def click_trade_button(self):
+        self.click_element((By.XPATH, self._trade_button_locator))
+
+    def click_confirm_button(self):
+        self.click_element((By.XPATH, self._confirm_button_locator))
+
+    def click_edit_button(self):
+        self.click_element((By.XPATH, self._edit_position_button_locator))
+
+    def is_notification_present(self):
+        return self.is_element_present((By.XPATH, self._notifications_locator))
 
     def validate_placed_details_with_notification(self, symbol, order_action, order_type, size, sl, tp):
         file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'expected_notifications.json')

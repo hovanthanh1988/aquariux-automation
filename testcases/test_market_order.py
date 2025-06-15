@@ -39,5 +39,12 @@ class TestMarketOrder:
                                                                     sl_price, tp_price)
         trading_home_page.validate_placed_details_with_table_detail("SELL", config.SIZE, bid_price, tp_price, sl_price)
 
-
+    def test_edit_open_position(self):
+        trading_home_page = TradingHomePage(self.driver)
+        trading_home_page.click_edit_button()
+        trading_home_page.input_sl_points(config.SL)
+        trading_home_page.input_tp_points(config.TP)
+        trading_home_page.click_trade_button()
+        trading_home_page.click_confirm_button()
+        time.sleep(5)
 
