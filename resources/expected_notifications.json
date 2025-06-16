@@ -18,5 +18,10 @@
     "title": "Limit Order Submitted",
     "BUY": "BTCUSD.std - BUY LIMIT ORDER placed, Size: 0.05 / Units: 0.05. Price: 100,000.0. Stop Loss: 99,900.0. Take Profit: 100,100.0.",
     "SELL": "BTCUSD.std - SELL LIMIT ORDER placed, Size: 0.05 / Units: 0.05. Price: 100,000.0. Stop Loss: 99,900.0. Take Profit: 100,100.0."
+  },
+  "Stop": {
+    "title": "Stop Order Submitted",
+    "BUY": "BTCUSD.std - BUY STOP ORDER placed, Size: 0.05 / Units: 0.05. Price: 106,000.0. Stop Loss: 105,900.0. Take Profit: 106,100.0.",
+    "SELL": "BTCUSD.std - SELL STOP ORDER placed, Size: 0.05 / Units: 0.05. Price: 106,000.0. Stop Loss: 105,900.0. Take Profit: 106,100.0."
   }
 }

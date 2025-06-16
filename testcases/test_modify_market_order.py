@@ -4,41 +4,7 @@ from pages.trading_home_page import TradingHomePage
 
 
 @pytest.mark.usefixtures("setup", "login")
-class TestMarketOrder:
-
-    def test_place_market_buy_order_with_sl_tp(self):
-        trading_home_page = TradingHomePage(self.driver)
-        trading_home_page.click_buy_button()
-        trading_home_page.click_order_type_dropdown_and_select("market")
-        trading_home_page.input_size(config.SIZE)
-        ask_price = trading_home_page.get_ask_price()
-        sl_price = ask_price - config.SL
-        tp_price = ask_price + config.TP
-        trading_home_page.input_sl_price(sl_price)
-        trading_home_page.input_tp_price(tp_price)
-        sl_price_formatted = format(sl_price, ",")
-        trading_home_page.click_trade_button()
-        trading_home_page.click_confirm_button()
-        trading_home_page.validate_order_details_with_notification(config.SYMBOL, "BUY", "market", ask_price,
-                                                                    config.SIZE,
-                                                                    sl_price, tp_price)
-        trading_home_page.validate_placed_details_on_open_position_table("BUY", config.SIZE, ask_price, tp_price, sl_price_formatted)
-    def test_place_market_sell_order_with_sl_tp(self):
-        trading_home_page = TradingHomePage(self.driver)
-        trading_home_page.click_sell_button()
-        trading_home_page.click_order_type_dropdown_and_select("market")
-        trading_home_page.input_size(config.SIZE)
-        bid_price = trading_home_page.get_bid_price()
-        sl_price = bid_price + config.SL
-        tp_price = bid_price - config.TP
-        trading_home_page.input_sl_price(sl_price)
-        trading_home_page.input_tp_price(tp_price)
-        sl_price_formatted = format(sl_price, ",")
-        trading_home_page.click_trade_button()
-        trading_home_page.click_confirm_button()
-        trading_home_page.validate_order_details_with_notification(config.SYMBOL, "SELL", "market", bid_price, config.SIZE,
-                                                                    sl_price, tp_price)
-        trading_home_page.validate_placed_details_on_open_position_table("SELL", config.SIZE, bid_price, tp_price, sl_price_formatted)
+class TestModifyMarketOrder:
 
     def test_edit_sl_tp_open_position(self):
         trading_home_page = TradingHomePage(self.driver)

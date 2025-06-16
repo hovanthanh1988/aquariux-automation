@@ -20,4 +20,7 @@ def modify_notification_data(file_path, symbol, order_type, entry_price = 0, siz
     elif order_type == "Limit":
         data["Limit"]['BUY'] = f"{symbol} - BUY LIMIT ORDER placed, Size: {size} / Units: {size}. Price: {entry_price_formatted}. Stop Loss: {sl_formatted}. Take Profit: {tp_formatted}."
         data["Limit"]['SELL'] = f"{symbol} - SELL LIMIT ORDER placed, Size: {size} / Units: {size}. Price: {entry_price_formatted}. Stop Loss: {sl_formatted}. Take Profit: {tp_formatted}."
+    elif order_type == "Stop":
+        data["Stop"]['BUY'] = f"{symbol} - BUY STOP ORDER placed, Size: {size} / Units: {size}. Price: {entry_price_formatted}. Stop Loss: {sl_formatted}. Take Profit: {tp_formatted}."
+        data["Stop"]['SELL'] = f"{symbol} - SELL STOP ORDER placed, Size: {size} / Units: {size}. Price: {entry_price_formatted}. Stop Loss: {sl_formatted}. Take Profit: {tp_formatted}."
     return data
