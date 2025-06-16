@@ -24,16 +24,19 @@ _pip install -r requirements.txt_
 https://allurereport.org/docs/install-for-windows/
 
 4. Running Tests
-To execute tests, use the following command:
- 
+To execute a specific test, use the following command:
+   _pytest /testcases/ -k <test_case_name>_
+
+5. To run all tests, use:
+
    _run_all.sh_
 
-5. Generating Reports
+6. Generating Reports
 After running tests, generate the Allure report:
 
    _allure serve reports/allure-results_
 
-6. Folder Structure
+7. Folder Structure
 
    - testcases/: Contains all test scripts.
 
