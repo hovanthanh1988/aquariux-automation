@@ -1,2 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","17323","test_login_success","testcases","Sun Jun 15 14:27:19 ICT 2025","passed","Sun Jun 15 14:27:36 ICT 2025","TestAuthentication","test_authentication","",""
