@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from utils.utils import load_test_data
 from utils.utils import modify_notification_data
 
-
+TIME_SLEEP=10
 class TradingHomePage(BasePage):
 
     _account_id_locator = "//div[@data-testid='account-id']"
@@ -20,14 +20,22 @@ class TradingHomePage(BasePage):
     _sl_price_input_locator = "//input[@data-testid='trade-input-stoploss-price']"
     _tp_points_input_locator = "//input[@data-testid='trade-input-takeprofit-points']"
     _tp_price_input_locator = "//input[@data-testid='trade-input-takeprofit-price']"
+
     _order_type_dropdown_locator = "//div[@data-testid='trade-dropdown-order-type']"
     _order_type_market_locator = "//div[@data-testid='trade-dropdown-order-type-market']"
     _order_type_limit_locator = "//div[@data-testid='trade-dropdown-order-type-limit']"
     _order_type_stop_locator = "//div[@data-testid='trade-dropdown-order-type-stop']"
-
     _expiry_type_dropdown_locator = "//div[@data-testid='trade-dropdown-expiry']"
     _expiry_gtc_dropdown_locator = "//div[@data-testid='trade-dropdown-expiry-good-till-cancelled']"
     _expiry_gtd_dropdown_locator = "//div[@data-testid='trade-dropdown-expiry-good-till-day']"
+    _bulk_close_dropdown_locator = "//div[@data-testid='bulk-close']"
+    _bulk_close_all_dropdown_locator = "//div[@data-testid='dropdown-bulk-close-all']"
+    _bulk_close_profit_dropdown_locator = "//div[@data-testid='dropdown-bulk-close-profit']"
+    _bulk_close_loss_dropdown_locator = "//div[@data-testid='dropdown-bulk-close-loss']"
+    _bulk_close_all_confirmation_button_locator = "//button[@data-testid='bulk-close-modal-button-submit-all']"
+    _edit_pending_order_expiry_locator = "//div[@data-testid='edit-dropdown-expiry']"
+    _expiry_gtc_pending_order_dropdown_locator = "//div[@data-testid='edit-dropdown-expiry-good-till-cancelled']"
+    _expiry_gtd_pending_order_dropdown_locator = "//div[@data-testid='edit-dropdown-expiry-good-till-day']"
 
     _symbol_input_locator = "//input[@data-testid='symbol-input-search']"
     _symbol_search_results_locator = "//div[@class='sc-1jx9xug-5 gVqGuT' and text()={}]"
@@ -48,6 +56,18 @@ class TradingHomePage(BasePage):
     _take_profit_locator = "//td[@data-testid='asset-open-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-open-column-take-profit']"
     _stop_loss_locator = "//td[@data-testid='asset-open-column-stop-loss' and text()={}]"
 
+    _pending_order_date_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::th[@data-testid='asset-pending-column-open-date']"
+    _pending_order_id_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::th[@data-testid='asset-pending-column-order-id']"
+    _pending_order_type_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-order-type']"
+    _pending_order_size_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-volume']"
+    _pending_order_unit_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-units']"
+    _pending_order_expiry_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-expiry']"
+    _pending_order_price_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-entry-price']"
+    _pending_order_take_profit_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]/preceding-sibling::td[@data-testid='asset-pending-column-take-profit']"
+    _pending_order_stop_loss_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]"
+
+    _edit_pending_order_button_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]//following-sibling::th/div/div[@data-testid='asset-pending-button-edit']"
+    _delete_pending_order_button_locator = "//td[@data-testid='asset-pending-column-stop-loss' and text()={}]//following-sibling::th/div/div[@data-testid='asset-pending-button-close']"
     _edit_position_button_locator = "//div[@data-testid='asset-open-button-edit']"
     _edit_input_stoploss_price_locator = "//input[@data-testid='edit-input-stoploss-price']"
     _edit_stoploss_price_decrease_locator = "//div[@data-testid='edit-input-stoploss-price-decrease']"
@@ -57,12 +77,17 @@ class TradingHomePage(BasePage):
     _edit_takeprofit_price_increase_locator = "//div[@data-testid='edit-input-takeprofit-price-increase']"
     _edit_order_button_locator = "//button[@data-testid='edit-button-order']"
     _edit_confirmation_confirm_button_locator = "//button[@data-testid='edit-confirmation-button-confirm']"
+    _input_pending_order_price_locator = "//input[@data-testid='edit-input-price']"
 
     _close_open_position_button_locator = "//div[@data-testid='asset-open-button-close']"
     _edit_volume_decrease_locator = "//div[@data-testid='close-order-input-volume-decrease']"
     _close_order_input_volume_locator = "//input[@data-testid='close-order-input-volume']"
     _close_order_button_locator = "//button[@data-testid='close-order-button-submit']"
     _close_notification_locator = "//svg[@data-testid='notification-close-button']"
+
+    _pending_order_tab_locator = "//div[@data-testid='tab-asset-order-type-pending-orders']"
+    _order_history_tab_locator = "//div[@data-testid='tab-asset-order-type-history']"
+    _delete_pending_confirmation_button_locator = "//button[@data-testid='confirmation-modal-button-submit']"
 
     def __init__(self, driver):
         super(TradingHomePage, self).__init__(driver)
@@ -143,6 +168,42 @@ class TradingHomePage(BasePage):
         close_order_input_volume = self.find_element((By.XPATH, self._close_order_input_volume_locator)).get_attribute('value')
         return float(close_order_input_volume)
 
+    def get_pending_order_date(self, sl):
+        pending_order_date = self.find_element((By.XPATH, self._pending_order_date_locator.format(f"'{sl}'"))).text
+        return pending_order_date
+
+    def get_pending_order_id(self, sl):
+        pending_order_id = self.find_element((By.XPATH, self._pending_order_id_locator.format(f"'{sl}'"))).text
+        return pending_order_id if pending_order_id else None
+
+    def get_pending_order_type(self, sl):
+        pending_order_type = self.find_element((By.XPATH, self._pending_order_type_locator.format(f"'{sl}'"))).text
+        return pending_order_type
+
+    def get_pending_order_size(self, sl):
+        pending_order_size = self.find_element((By.XPATH, self._pending_order_size_locator.format(f"'{sl}'"))).text
+        return float(pending_order_size.replace(',', '')) if pending_order_size else None
+
+    def get_pending_order_unit(self, sl):
+        pending_order_unit = self.find_element((By.XPATH, self._pending_order_unit_locator.format(f"'{sl}'"))).text
+        return float(pending_order_unit.replace(',', '')) if pending_order_unit else None
+
+    def get_pending_order_expiry(self, sl):
+        pending_order_expiry = self.find_element((By.XPATH, self._pending_order_expiry_locator.format(f"'{sl}'"))).text
+        return pending_order_expiry
+
+    def get_pending_order_price(self, sl):
+        pending_order_price = self.find_element((By.XPATH, self._pending_order_price_locator.format(f"'{sl}'"))).text
+        return float(pending_order_price.replace(',', '')) if pending_order_price else None
+
+    def get_pending_order_take_profit(self, sl):
+        pending_order_take_profit = self.find_element((By.XPATH, self._pending_order_take_profit_locator.format(f"'{sl}'"))).text
+        return float(pending_order_take_profit.replace(',', '')) if pending_order_take_profit else None
+
+    def get_pending_order_stop_loss(self, sl):
+        pending_order_stop_loss = self.find_element((By.XPATH, self._pending_order_stop_loss_locator.format(f"'{sl}'"))).text
+        return float(pending_order_stop_loss.replace(',', '')) if pending_order_stop_loss else None
+
     def input_symbol(self, symbol):
         self.input_text_to_element((By.XPATH, self._symbol_input_locator), symbol)
 
@@ -165,7 +226,24 @@ class TradingHomePage(BasePage):
         self.input_text_to_element((By.XPATH, self._tp_points_input_locator), tp)
 
     def input_volume_on_close_order_popup(self, volume):
-        self.input_text_to_element((By.XPATH, self._close_order_input_volume_locator), volume)
+        element = self.find_element((By.XPATH, self._close_order_input_volume_locator))
+        element.clear()
+        # Set input value using JavaScript
+        self.driver.execute_script("""
+                arguments[0].value = arguments[1];
+                arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+                arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+                arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+            """, element, volume)
+
+    def update_pending_order_price(self, price):
+        self.input_text_to_element_by_java_script((By.XPATH, self._input_pending_order_price_locator), price)
+
+    def update_pending_order_sl_price(self, sl):
+        self.input_text_to_element_by_java_script((By.XPATH, self._edit_input_stoploss_price_locator), sl)
+
+    def update_pending_order_tp_price(self, tp):
+        self.input_text_to_element_by_java_script((By.XPATH, self._edit_input_takeprofit_price_locator), tp)
 
     def click_symbol_search_result(self, symbol):
         self.click_element((By.XPATH, self._symbol_search_results_locator.format(f"'{symbol}'")), 20)
@@ -183,6 +261,17 @@ class TradingHomePage(BasePage):
     def click_expiry_type_dropdown_and_select(self, value):
         self.click_element((By.XPATH, self._expiry_type_dropdown_locator))
         self.click_element((By.XPATH, f"//div[@data-testid='trade-dropdown-expiry-{value.lower()}']"))
+
+    def update_expiry_pending_order_and_select(self, value):
+        self.click_element((By.XPATH, self._edit_pending_order_expiry_locator))
+        self.click_element((By.XPATH, f"//div[@data-testid='edit-dropdown-expiry-{value.lower()}']"))
+
+    def click_bulk_close_dropdown_and_select(self, value):
+        self.click_element((By.XPATH, self._bulk_close_dropdown_locator))
+        self.click_element((By.XPATH, f"//div[@data-testid='dropdown-bulk-close-{value.lower()}']"))
+
+    def click_bulk_close_all_confirmation_button(self):
+        self.click_element((By.XPATH, self._bulk_close_all_confirmation_button_locator))
 
     def click_trade_button(self):
         self.click_element((By.XPATH, self._trade_button_locator))
@@ -209,7 +298,7 @@ class TradingHomePage(BasePage):
         self.click_element((By.XPATH, self._edit_volume_decrease_locator))
 
     def click_update_order_button(self):
-        self.click_element((By.XPATH, self._edit_order_button_locator))
+        self.click_element_by_java_script((By.XPATH, self._edit_order_button_locator))
 
     def click_edit_confirmation_confirm_button(self):
         self.click_element((By.XPATH, self._edit_confirmation_confirm_button_locator))
@@ -218,11 +307,26 @@ class TradingHomePage(BasePage):
         self.click_element((By.XPATH, self._close_open_position_button_locator))
 
     def click_close_order_button(self):
-        self.click_element((By.XPATH, self._close_order_button_locator))
+        self.click_element_by_java_script((By.XPATH, self._close_order_button_locator))
 
     def click_close_notification(self):
         if self.is_notification_present():
             self.click_element((By.XPATH, self._close_notification_locator))
+
+    def click_pending_order_tab(self):
+        self.click_element((By.XPATH, self._pending_order_tab_locator))
+
+    def click_history_tab(self):
+        self.click_element((By.XPATH, self._order_history_tab_locator))
+
+    def click_edit_pending_order_button(self, sl):
+        self.click_element((By.XPATH, self._edit_pending_order_button_locator.format(f"'{sl}'")))
+
+    def click_delete_pending_order(self, sl):
+        self.click_element((By.XPATH, self._delete_pending_order_button_locator.format(f"'{sl}'")))
+
+    def click_delete_pending_confirmation_button(self):
+        self.click_element((By.XPATH, self._delete_pending_confirmation_button_locator))
 
     def is_notification_present(self):
         return self.is_element_present((By.XPATH, self._notifications_locator))
@@ -284,7 +388,7 @@ class TradingHomePage(BasePage):
         self.input_tp_price(tp)
         self.click_trade_button()
         self.click_confirm_button()
-        time.sleep(10)
+        time.sleep(TIME_SLEEP)
 
     def validate_order_details_with_notification(self, symbol, order_action, order_type, entry_price, size, sl, tp):
         file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', 'expected_notifications.json')
@@ -300,7 +404,7 @@ class TradingHomePage(BasePage):
         assert notification_description == expected_description
 
     def validate_placed_details_on_open_position_table(self, order_action, size, entry_price, tp, sl):
-        time.sleep(10)
+        time.sleep(TIME_SLEEP)
         expected_open_date = datetime.now().date().strftime("%Y-%m-%d")
         actual_open_date = self.get_open_date(sl)
         actual_open_type = self.get_open_type(sl)
@@ -319,7 +423,7 @@ class TradingHomePage(BasePage):
         assert actual_stop_loss == float(sl.replace(',', ''))
 
     def validate_order_detail_not_present_on_open_position_table(self, sl):
-        time.sleep(10)
+        time.sleep(TIME_SLEEP)
         open_date = self.is_open_position_date_present(sl)
         open_type = self.is_open_position_type_present(sl)
         open_size = self.is_open_position_size_present(sl)
@@ -336,23 +440,54 @@ class TradingHomePage(BasePage):
         assert not take_profit
         assert not stop_loss
 
-    def validate_placed_details_on_pending_order_table(self, order_action, size, entry_price, tp, sl):
-        time.sleep(10)
+    def validate_placed_details_on_pending_order_table(self, order_action, size, price_limit, tp, sl, expiry):
+        time.sleep(TIME_SLEEP)
         expected_open_date = datetime.now().date().strftime("%Y-%m-%d")
-        actual_open_date = self.get_open_date(sl)
-        actual_open_type = self.get_open_type(sl)
-        actual_open_size = self.get_open_size(sl)
-        actual_open_unit = self.get_open_unit(sl)
-        actual_entry_price = self.get_entry_price(sl)
-        actual_take_profit = self.get_take_profit(sl)
-        actual_stop_loss = self.get_stop_loss(sl)
+        actual_pending_order_date = self.get_pending_order_date(sl)
+        actual_pending_order_type = self.get_pending_order_type(sl)
+        actual_pending_order_size = self.get_pending_order_size(sl)
+        actual_pending_order_unit = self.get_pending_order_unit(sl)
+        actual_pending_order_expiry = self.get_pending_order_expiry(sl)
+        actual_pending_order_price = self.get_pending_order_price(sl)
+        actual_pending_order_take_profit = self.get_pending_order_take_profit(sl)
+        actual_pending_order_stop_loss = self.get_pending_order_stop_loss(sl)
 
-        assert expected_open_date in actual_open_date
-        assert actual_open_type == order_action
-        assert actual_open_size == size
-        assert actual_open_unit == size
-        assert actual_entry_price == entry_price
-        assert actual_take_profit == tp
-        assert actual_stop_loss == float(sl.replace(',', ''))
+        assert expected_open_date in actual_pending_order_date
+        assert actual_pending_order_type == order_action
+        assert actual_pending_order_size == size
+        assert actual_pending_order_unit == size
+        assert actual_pending_order_expiry == expiry
+        assert actual_pending_order_price == price_limit
+        assert actual_pending_order_take_profit == tp
+        assert actual_pending_order_stop_loss == float(sl.replace(',', ''))
+
+    def validate_all_open_positions_closed(self):
+        open_positions = self.driver.find_elements(By.XPATH, "//div[@data-testid='asset-open-column-stop-loss']")
+        assert len(open_positions) == 0
+
+    def validate_pending_order_deleted(self, sl):
+        time.sleep(TIME_SLEEP)
+        open_date = self.is_open_position_date_present(sl)
+        open_type = self.is_open_position_type_present(sl)
+        open_size = self.is_open_position_size_present(sl)
+        open_unit = self.is_open_position_unit_present(sl)
+        entry_price = self.is_open_position_entry_price_present(sl)
+        take_profit = self.is_open_position_take_profit_present(sl)
+        stop_loss = self.is_open_position_stop_loss_present(sl)
+
+        assert not open_date
+        assert not open_type
+        assert not open_size
+        assert not open_unit
+        assert not entry_price
+        assert not take_profit
+        assert not stop_loss
+
+    def validate_order_on_history_table(self, order_id):
+        time.sleep(TIME_SLEEP)
+        assert self.is_element_present((By.XPATH, f"//th[@data-testid='asset-history-column-order-id' and text()='{order_id}']"))
+
+
+
 
 

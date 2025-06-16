@@ -87,3 +87,13 @@ class TestMarketOrder:
         trading_home_page.validate_order_details_with_notification(config.SYMBOL, "BUY", "close_open_position", ask_price, config.SIZE,
                                                                     sl_price, tp_price)
         trading_home_page.validate_order_detail_not_present_on_open_position_table(sl_price_formatted)
+
+    def test_bulk_close_open_position(self):
+        trading_home_page = TradingHomePage(self.driver)
+        ask_price = trading_home_page.get_ask_price()
+        sl_price = ask_price - config.SL
+        tp_price = ask_price + config.TP
+        trading_home_page.send_buy_order(config.SIZE, sl_price, tp_price)
+        trading_home_page.click_bulk_close_dropdown_and_select("all")
+        trading_home_page.click_bulk_close_all_confirmation_button()
+        trading_home_page.validate_all_open_positions_closed()
